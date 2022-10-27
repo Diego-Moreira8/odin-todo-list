@@ -97,6 +97,7 @@ function renderMenu() {
         <button class="project">
           ${allProjects.projectsArray[i].name}
         </button>
+        <button class="rename-project">Rename</button>
         <button class="remove-project">X</button>
       </div>`
     );
@@ -123,6 +124,23 @@ function renderMenu() {
         renderToDosArea(allProjects.projectsArray[0]);
       }
       allProjects.removeProject(index);
+      renderMenu();
+    });
+  });
+
+  // Adding event listeners to the rename project buttons
+  const renameProjectButtons = menuDiv.querySelectorAll(".rename-project");
+  renameProjectButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      // Read the div's attribute
+      const index = e.target.parentElement.getAttribute("data-project-index");
+      // Prompt for the new name
+      let newName = "";
+      do {
+        newName = prompt("Novo nome: ");
+        allProjects.projectsArray[index].name = newName;
+      } while (newName === null || newName === "");
+
       renderMenu();
     });
   });
