@@ -17,7 +17,6 @@ class Project {
   }
 }
 
-// Tests ------------------------------------------------------------------
 const allProjects = {
   projectsArray: [new Project("default")],
 
@@ -30,22 +29,6 @@ const allProjects = {
     this.projectsArray.splice(index, 1);
   },
 };
-
-allProjects.projectsArray[0].addToDoItem(
-  "Fazer compras",
-  "Descrição",
-  "2022-10-25",
-  1,
-  false
-);
-allProjects.projectsArray[0].addToDoItem(
-  "Limpar mesa",
-  "Descrição",
-  "2022-11-03",
-  1,
-  true
-);
-// Tests ------------------------------------------------------------------
 
 function renderMenu() {
   const menuDiv = document.querySelector("#menu");
@@ -155,7 +138,8 @@ function renderToDosArea(project) {
       `<div class="todo-item" data-todo-index="${project.toDos.indexOf(item)}">
         <div>
           <input type="checkbox" ${item.checked ? "checked" : ""} /> 
-          <input type="text" value="${item.title}" class="title" />
+          <input type="text" value="${item.title}" class="title" 
+          placeholder="Insira um título aqui"/>
           <input type="date" value="${item.dueDate}" class="due-date">
           <button type="button" class="priority">${item.priority}</button>
           <button type="button" class="remove-todo">X</button>
@@ -166,6 +150,29 @@ function renderToDosArea(project) {
       </div>`
     );
   }
+
+  // Button for add to do item
+  toDosAreaDiv.insertAdjacentHTML(
+    "beforeend",
+    `<button type="button" id="add-todo-item">+</button>`
+  );
+  // Event for add button
+  toDosAreaDiv.querySelector("#add-todo-item").addEventListener("click", () => {
+    // Variables with current day for the backticks
+    const y = new Date().getFullYear(),
+      m = new Date().getMonth() + 1,
+      d = new Date().getDate();
+
+    currentProject.addToDoItem(
+      "",
+      "",
+      `${y}-${m < 10 ? "0" + m : m}-${d < 10 ? "0" + d : d}`,
+      1,
+      false
+    );
+
+    renderToDosArea(currentProject);
+  });
 
   // Add event listener to the checkboxes
   toDosAreaDiv.querySelectorAll("[type='checkbox']").forEach((box) => {
