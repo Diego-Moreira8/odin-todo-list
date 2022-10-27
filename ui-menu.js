@@ -6,7 +6,9 @@ export default function renderMenu() {
   for (let project of projects) {
     menuDiv.insertAdjacentHTML(
       "beforeend",
-      `<button class="project">${project.name}</button>`
+      `<button class="project" data-project-index=${projects.indexOf(
+        project
+      )}>${project.name}</button>`
     );
   }
 
