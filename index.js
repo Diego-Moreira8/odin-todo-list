@@ -180,7 +180,7 @@ function renderToDosArea(project) {
   for (let item of project.toDos) {
     toDosAreaDiv.insertAdjacentHTML(
       "beforeend",
-      `<div class="todo-item">
+      `<div class="todo-item" data-todo-index="${project.toDos.indexOf(item)}">
         <div>
           ${item.priority} |
           <input type="checkbox" ${item.checked ? "checked" : ""} /> 
@@ -192,6 +192,19 @@ function renderToDosArea(project) {
       </div>`
     );
   }
+
+  // Add event listener to the checkboxes
+  toDosAreaDiv.querySelectorAll("[type='checkbox']").forEach((box) => {
+    box.addEventListener("change", (e) => {
+      // Read the div (parent parent element) index
+      const index =
+        e.target.parentElement.parentElement.getAttribute("data-todo-index");
+      // Change the checked status to the checkbox value
+      currentProject.toDos[index].checked = e.target.checked;
+
+      renderToDosArea(currentProject);
+    });
+  });
 }
 
 // Initialize Menu
