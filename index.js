@@ -84,17 +84,18 @@ allProjects.projectsArray[3].addToDoItem(
 function renderMenu() {
   const menuDiv = document.querySelector("#menu");
 
-  // Clear menu
-  menuDiv.innerHTML = "";
+  // Clear menu and add the default project button
+  menuDiv.innerHTML = `<div data-project-index=0>
+    <button class="project">Notas</button>
+  </div>`;
 
-  // Create buttons with allProjects.projectsArray
-  for (let project of allProjects.projectsArray) {
+  // Create buttons with allProjects.projectsArray, except the default
+  for (let i = 1; i < allProjects.projectsArray.length; i++) {
     menuDiv.insertAdjacentHTML(
       "beforeend",
-      `<div data-project-index=${allProjects.projectsArray.indexOf(project)}>
-        <button
-          class="project">
-          ${project.name}
+      `<div data-project-index=${i}>
+        <button class="project">
+          ${allProjects.projectsArray[i].name}
         </button>
         <button class="remove-project">X</button>
       </div>`
@@ -117,9 +118,12 @@ function renderMenu() {
     button.addEventListener("click", (e) => {
       // Read the div's attribute
       const index = e.target.parentElement.getAttribute("data-project-index");
+      // Render default project if current project is removed
+      if (allProjects.projectsArray[index] === currentProject) {
+        renderToDosArea(allProjects.projectsArray[0]);
+      }
       allProjects.removeProject(index);
       renderMenu();
-      renderToDosArea(allProjects.projectsArray[0]);
     });
   });
 
@@ -132,6 +136,8 @@ function renderMenu() {
 }
 
 function renderToDosArea(project) {
+  currentProject = project;
+
   const toDosAreaDiv = document.querySelector("#todos-area-div");
 
   // Start rendering with the project title
@@ -156,4 +162,5 @@ function renderToDosArea(project) {
 renderMenu();
 
 // Initialize on Default
+let currentProject;
 renderToDosArea(allProjects.projectsArray[0]);
