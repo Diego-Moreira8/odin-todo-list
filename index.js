@@ -154,11 +154,11 @@ function renderToDosArea(project) {
       "beforeend",
       `<div class="todo-item" data-todo-index="${project.toDos.indexOf(item)}">
         <div>
-          ${item.priority} |
           <input type="checkbox" ${item.checked ? "checked" : ""} /> 
           ${item.checked} |
           <strong>${item.title}</strong> | 
           ${item.dueDate}
+          <button type="button" class="priority">${item.priority}</button>
         </div>
         <div>${item.description}</div>
       </div>`
@@ -173,6 +173,21 @@ function renderToDosArea(project) {
         e.target.parentElement.parentElement.getAttribute("data-todo-index");
       // Change the checked status to the checkbox value
       currentProject.toDos[index].checked = e.target.checked;
+
+      renderToDosArea(currentProject);
+    });
+  });
+
+  // Add event listener to the priority togglers
+  toDosAreaDiv.querySelectorAll(".priority").forEach((button) => {
+    button.addEventListener("click", (e) => {
+      // Read the div (parent parent element) index
+      const index =
+        e.target.parentElement.parentElement.getAttribute("data-todo-index");
+      // Change priority from 1 to 3
+      if (currentProject.toDos[index].priority < 3)
+        currentProject.toDos[index].priority++;
+      else currentProject.toDos[index].priority = 1;
 
       renderToDosArea(currentProject);
     });
