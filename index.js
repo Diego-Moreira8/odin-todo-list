@@ -30,8 +30,8 @@ const allProjects = {
     renderMenu();
   },
 
-  removeProject() {
-    alert("Remove Project");
+  removeProject(index) {
+    this.projectsArray.splice(index, 1);
   },
 };
 
@@ -41,59 +41,85 @@ allProjects.projectsArray[0].addToDoItem(
   "Fazer compras",
   "Descrição",
   "28/10/22",
+  1,
   false
 );
 allProjects.projectsArray[0].addToDoItem(
   "Limpar mesa",
   "Descrição",
   "26/10/22",
+  1,
   true
 );
 allProjects.projectsArray[1].addToDoItem(
   "Lavar louças",
   "Descrição",
   "28/10/22",
+  1,
   false
 );
 allProjects.projectsArray[1].addToDoItem(
   "Tomar banho",
   "Descrição",
   "28/10/22",
+  1,
   false
 );
 allProjects.projectsArray[1].addToDoItem(
   "Estudar",
   "Descrição",
   "28/10/22",
+  1,
   false
 );
 allProjects.projectsArray[3].addToDoItem(
   "Pescar",
   "Descrição",
   "28/10/22",
+  1,
   false
 );
 // Tests ------------------------------------------------------------------
 
 function renderMenu() {
   const menuDiv = document.querySelector("#menu");
+
+  // Clear menu
   menuDiv.innerHTML = "";
 
+  // Create buttons with allProjects.projectsArray
   for (let project of allProjects.projectsArray) {
     menuDiv.insertAdjacentHTML(
       "beforeend",
-      `<button class="project" data-project-index=${allProjects.projectsArray.indexOf(
-        project
-      )}>${project.name}</button>`
+      `<div data-project-index=${allProjects.projectsArray.indexOf(project)}>
+        <button
+          class="project">
+          ${project.name}
+        </button>
+        <button class="remove-project">X</button>
+      </div>`
     );
   }
 
   // Adding event listeners to the projects buttons
-  const menuButtons = menuDiv.querySelectorAll(".project");
-  menuButtons.forEach((button) => {
+  const projectButtons = menuDiv.querySelectorAll(".project");
+  projectButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      const index = e.target.getAttribute("data-project-index");
+      // Read the div's attribute
+      const index = e.target.parentElement.getAttribute("data-project-index");
       renderToDosArea(allProjects.projectsArray[index]);
+    });
+  });
+
+  // Adding event listeners to the remove project buttons
+  const removeProjectButtons = menuDiv.querySelectorAll(".remove-project");
+  removeProjectButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      // Read the div's attribute
+      const index = e.target.parentElement.getAttribute("data-project-index");
+      allProjects.removeProject(index);
+      renderMenu();
+      renderToDosArea(allProjects.projectsArray[0]);
     });
   });
 
@@ -103,27 +129,31 @@ function renderMenu() {
   addProjectBtn.id = "add-project";
   addProjectBtn.addEventListener("click", allProjects.addProject);
   menuDiv.appendChild(addProjectBtn);
-
-  return menuDiv;
 }
 
 function renderToDosArea(project) {
   const toDosAreaDiv = document.querySelector("#todos-area-div");
-  toDosAreaDiv.innerHTML = "";
 
+  // Start rendering with the project title
+  toDosAreaDiv.innerHTML = `<h2>${project.name}</h2>`;
+
+  // Render each todo item
   for (let item of project.toDos) {
     toDosAreaDiv.insertAdjacentHTML(
       "beforeend",
-      `<div class="todo-item">${item.title}</div>`
+      `<div class="todo-item">
+        ${item.title} | 
+        ${item.description} | 
+        ${item.dueDate} | 
+        ${item.priority} | 
+        ${item.checked}
+      </div>`
     );
   }
-
-  return toDosAreaDiv;
 }
 
 // Initialize Menu
-const menuDiv = document.querySelector("#menu");
-menuDiv.appendChild(renderMenu());
+renderMenu();
 
 // Initialize on Default
 renderToDosArea(allProjects.projectsArray[0]);
