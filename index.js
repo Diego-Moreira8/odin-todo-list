@@ -1,20 +1,18 @@
-class Project {
-  constructor(name) {
-    this.name = name;
-    this.toDos = [];
-  }
+import renderHeader from "./ui-header.js";
+import renderMenu from "./ui-menu.js";
+import renderToDosArea from "./ui-todos-area.js";
+import { projects } from "./project-class.js";
 
-  getToDos() {
-    return this.toDos;
-  }
+projects[0].addToDoItem(
+  "Fazer compras",
+  "Compras pra semana",
+  "27/10/2022",
+  1,
+  true
+);
+projects[0].addToDoItem("Limpar Mesa", "", "27/10/2022", 1, true);
 
-  addToDoItem(title, description, dueDate, priority, checked) {
-    this.toDos.push({ title, description, dueDate, priority, checked });
-  }
-
-  removeToDoItem(index) {
-    this.toDos.splice(index, 1);
-  }
-}
-
-const projects = [new Project("default")];
+const content = document.querySelector("#content");
+content.appendChild(renderHeader());
+content.appendChild(renderMenu());
+content.appendChild(renderToDosArea(projects[0]));
