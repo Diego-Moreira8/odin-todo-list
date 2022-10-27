@@ -158,6 +158,7 @@ function renderToDosArea(project) {
           <input type="text" value="${item.title}" class="title" />
           <input type="date" value="${item.dueDate}" class="due-date">
           <button type="button" class="priority">${item.priority}</button>
+          <button type="button" class="remove-todo">X</button>
         </div>
         <div>
           <textarea class="description">${item.description}</textarea>
@@ -228,6 +229,19 @@ function renderToDosArea(project) {
         e.target.parentElement.parentElement.getAttribute("data-todo-index");
 
       currentProject.toDos[index].description = e.target.value;
+
+      renderToDosArea(currentProject);
+    });
+  });
+
+  // Add event listener on remove buttons (double click)
+  toDosAreaDiv.querySelectorAll(".remove-todo").forEach((btn) => {
+    btn.addEventListener("dblclick", (e) => {
+      // Read the div (parent parent element) index
+      const index =
+        e.target.parentElement.parentElement.getAttribute("data-todo-index");
+
+      currentProject.removeToDoItem(index);
 
       renderToDosArea(currentProject);
     });
