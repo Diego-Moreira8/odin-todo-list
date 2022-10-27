@@ -132,16 +132,29 @@ function renderMenu() {
   const renameProjectButtons = menuDiv.querySelectorAll(".rename-project");
   renameProjectButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      // Read the div's attribute
-      const index = e.target.parentElement.getAttribute("data-project-index");
-      // Prompt for the new name
-      let newName = "";
-      do {
-        newName = prompt("Novo nome: ");
-        allProjects.projectsArray[index].name = newName;
-      } while (newName === null || newName === "");
-
-      renderMenu();
+      // Take the div (parent element)
+      const parent = e.target.parentElement;
+      // Replace the buttons with a rename field
+      parent.innerHTML = `
+        <form>
+          <input type="text" />
+          <button type="submit">OK</button>
+          <button type="button" class="cancel-rename">X</button>
+        <form>
+      `;
+      // Add submit event listener
+      parent.querySelector("form").addEventListener("submit", (e) => {
+        e.preventDefault();
+        // Read the div's attribute
+        const index = e.target.parentElement.getAttribute("data-project-index");
+        // Rename the project with the input value
+        allProjects.projectsArray[index].name = e.target[0].value;
+        renderMenu();
+      });
+      // Add event listener to the cancel button
+      parent.querySelector(".cancel-rename").addEventListener("click", () => {
+        renderMenu(); // Just render again
+      });
     });
   });
 
