@@ -172,18 +172,23 @@ function renderToDosArea(project) {
   const toDosAreaDiv = document.querySelector("#todos-area-div");
 
   // Start rendering with the project title
-  toDosAreaDiv.innerHTML = `<h2>${project.name}</h2>`;
+  if (currentProject === allProjects.projectsArray[0])
+    toDosAreaDiv.innerHTML = `<h2>Notas</h2>`; // If default project
+  else toDosAreaDiv.innerHTML = `<h2>${project.name}</h2>`;
 
   // Render each todo item
   for (let item of project.toDos) {
     toDosAreaDiv.insertAdjacentHTML(
       "beforeend",
       `<div class="todo-item">
-        ${item.title} | 
-        ${item.description} | 
-        ${item.dueDate} | 
-        ${item.priority} | 
-        ${item.checked}
+        <div>
+          ${item.priority} |
+          <input type="checkbox" ${item.checked ? "checked" : ""} /> 
+          ${item.checked} |
+          <strong>${item.title}</strong> | 
+          ${item.dueDate}
+        </div>
+        <div>${item.description}</div>
       </div>`
     );
   }
