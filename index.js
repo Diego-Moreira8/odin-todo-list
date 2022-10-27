@@ -155,14 +155,13 @@ function renderToDosArea(project) {
       `<div class="todo-item" data-todo-index="${project.toDos.indexOf(item)}">
         <div>
           <input type="checkbox" ${item.checked ? "checked" : ""} /> 
-          ${item.checked} |
           <input type="text" value="${item.title}" class="title" />
-          <strong>${item.title}</strong> | 
           <input type="date" value="${item.dueDate}" class="due-date">
-          ${item.dueDate}
           <button type="button" class="priority">${item.priority}</button>
         </div>
-        <div>${item.description}</div>
+        <div>
+          <textarea class="description">${item.description}</textarea>
+        </div>
       </div>`
     );
   }
@@ -216,6 +215,19 @@ function renderToDosArea(project) {
         e.target.parentElement.parentElement.getAttribute("data-todo-index");
 
       currentProject.toDos[index].title = e.target.value;
+
+      renderToDosArea(currentProject);
+    });
+  });
+
+  // Add event listener on description textarea
+  toDosAreaDiv.querySelectorAll(".description").forEach((textarea) => {
+    textarea.addEventListener("change", (e) => {
+      // Read the div (parent parent element) index
+      const index =
+        e.target.parentElement.parentElement.getAttribute("data-todo-index");
+
+      currentProject.toDos[index].description = e.target.value;
 
       renderToDosArea(currentProject);
     });
