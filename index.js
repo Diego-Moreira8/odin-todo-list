@@ -19,11 +19,7 @@ class Project {
 
 // Tests ------------------------------------------------------------------
 const allProjects = {
-  projectsArray: [
-    new Project("default"),
-    new Project("Teste 1"),
-    new Project("Teste 2"),
-  ],
+  projectsArray: [new Project("default")],
 
   addProject() {
     allProjects.projectsArray.push(new Project("Novo Projeto"));
@@ -34,8 +30,6 @@ const allProjects = {
     this.projectsArray.splice(index, 1);
   },
 };
-
-allProjects.projectsArray.push(new Project("Teste 3"));
 
 allProjects.projectsArray[0].addToDoItem(
   "Fazer compras",
@@ -50,34 +44,6 @@ allProjects.projectsArray[0].addToDoItem(
   "26/10/22",
   1,
   true
-);
-allProjects.projectsArray[1].addToDoItem(
-  "Lavar louças",
-  "Descrição",
-  "28/10/22",
-  1,
-  false
-);
-allProjects.projectsArray[1].addToDoItem(
-  "Tomar banho",
-  "Descrição",
-  "28/10/22",
-  1,
-  false
-);
-allProjects.projectsArray[1].addToDoItem(
-  "Estudar",
-  "Descrição",
-  "28/10/22",
-  1,
-  false
-);
-allProjects.projectsArray[3].addToDoItem(
-  "Pescar",
-  "Descrição",
-  "28/10/22",
-  1,
-  false
 );
 // Tests ------------------------------------------------------------------
 
@@ -162,7 +128,13 @@ function renderMenu() {
   const addProjectBtn = document.createElement("button");
   addProjectBtn.textContent = "+";
   addProjectBtn.id = "add-project";
-  addProjectBtn.addEventListener("click", allProjects.addProject);
+  addProjectBtn.addEventListener("click", () => {
+    allProjects.addProject();
+    // Render new project (last of the array)
+    renderToDosArea(
+      allProjects.projectsArray[allProjects.projectsArray.length - 1]
+    );
+  });
   menuDiv.appendChild(addProjectBtn);
 }
 
