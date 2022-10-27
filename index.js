@@ -34,14 +34,14 @@ const allProjects = {
 allProjects.projectsArray[0].addToDoItem(
   "Fazer compras",
   "Descrição",
-  "28/10/22",
+  "2022-10-25",
   1,
   false
 );
 allProjects.projectsArray[0].addToDoItem(
   "Limpar mesa",
   "Descrição",
-  "26/10/22",
+  "2022-11-03",
   1,
   true
 );
@@ -156,7 +156,9 @@ function renderToDosArea(project) {
         <div>
           <input type="checkbox" ${item.checked ? "checked" : ""} /> 
           ${item.checked} |
+          <input type="text" value="${item.title}" class="title" />
           <strong>${item.title}</strong> | 
+          <input type="date" value="${item.dueDate}" class="due-date">
           ${item.dueDate}
           <button type="button" class="priority">${item.priority}</button>
         </div>
@@ -188,6 +190,32 @@ function renderToDosArea(project) {
       if (currentProject.toDos[index].priority < 3)
         currentProject.toDos[index].priority++;
       else currentProject.toDos[index].priority = 1;
+
+      renderToDosArea(currentProject);
+    });
+  });
+
+  // Add event listener on due date input
+  toDosAreaDiv.querySelectorAll(".due-date").forEach((input) => {
+    input.addEventListener("change", (e) => {
+      // Read the div (parent parent element) index
+      const index =
+        e.target.parentElement.parentElement.getAttribute("data-todo-index");
+      // Change priority from 1 to 3
+      currentProject.toDos[index].dueDate = e.target.value;
+
+      renderToDosArea(currentProject);
+    });
+  });
+
+  // Add event listener on title input
+  toDosAreaDiv.querySelectorAll(".title").forEach((input) => {
+    input.addEventListener("change", (e) => {
+      // Read the div (parent parent element) index
+      const index =
+        e.target.parentElement.parentElement.getAttribute("data-todo-index");
+
+      currentProject.toDos[index].title = e.target.value;
 
       renderToDosArea(currentProject);
     });
