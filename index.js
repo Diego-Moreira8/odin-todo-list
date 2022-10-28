@@ -58,12 +58,12 @@ function renderMenu() {
   menuDiv.querySelector("#add-project").addEventListener("click", (e) => {
     // Take the div (parent element)
     const parent = e.target.parentElement;
-    // Replace the buttons with a rename field
+    // Replace the button with a rename field
     parent.innerHTML = `
         <form>
           <input type="text" placeholder="Nome do projeto" required />
           <button type="submit">Criar</button>
-          <button type="button" class="cancel-rename">Cancelar</button>
+          <button type="button" class="cancel-add">Cancelar</button>
         <form>
       `;
 
@@ -75,6 +75,10 @@ function renderMenu() {
       renderToDosArea(
         allProjects.projectsArray[allProjects.projectsArray.length - 1]
       );
+    });
+
+    parent.querySelector(".cancel-add").addEventListener("click", () => {
+      renderMenu(); // Just render again
     });
   });
 
