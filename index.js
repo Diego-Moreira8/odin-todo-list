@@ -31,6 +31,8 @@ const allProjects = {
 };
 
 function renderMenu() {
+  localStorage.setItem("allProj", JSON.stringify(allProjects.projectsArray));
+
   const menuDiv = document.querySelector("#menu");
 
   // Clear menu and add the default project button
@@ -122,6 +124,7 @@ function renderMenu() {
 }
 
 function renderToDosArea(project) {
+  localStorage.setItem("allProj", JSON.stringify(allProjects.projectsArray));
   currentProject = project;
 
   const toDosAreaDiv = document.querySelector("#todos-area-div");
@@ -163,6 +166,7 @@ function renderToDosArea(project) {
       m = new Date().getMonth() + 1,
       d = new Date().getDate();
 
+    console.log(currentProject);
     currentProject.addToDoItem(
       "",
       "",
@@ -255,9 +259,14 @@ function renderToDosArea(project) {
   });
 }
 
+console.table(JSON.parse(localStorage.getItem("allProj")));
+// Add todo btn doesn't work
+//allProjects.projectsArray = JSON.parse(localStorage.getItem("allProj"));
+console.table(allProjects.projectsArray);
+
 // Initialize Menu
 renderMenu();
 
 // Initialize on Default
-let currentProject;
-renderToDosArea(allProjects.projectsArray[0]);
+let currentProject = allProjects.projectsArray[0];
+renderToDosArea(currentProject);
