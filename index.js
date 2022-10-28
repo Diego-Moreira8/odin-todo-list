@@ -4,10 +4,6 @@ class Project {
     this.toDos = []; // Stores all todo-items objects
   }
 
-  getToDos() {
-    return this.toDos;
-  }
-
   addToDoItem(title, description, dueDate, priority, checked) {
     this.toDos.push({ title, description, dueDate, priority, checked });
   }
@@ -18,7 +14,7 @@ class Project {
 }
 
 const allProjects = {
-  projectsArray: [new Project("default")],
+  projectsArray: [new Project("default")], // Array with default project
 
   addProject() {
     allProjects.projectsArray.push(new Project("Novo Projeto"));
@@ -31,8 +27,6 @@ const allProjects = {
 };
 
 function renderMenu() {
-  //updateLocalStorage();
-
   const menuDiv = document.querySelector("#menu");
 
   // Clear menu and add the default project button------------------------------
@@ -136,17 +130,14 @@ function renderMenu() {
 }
 
 function renderToDosArea(project) {
-  updateLocalStorage();
   currentProject = project;
 
   const toDosAreaDiv = document.querySelector("#todos-area-div");
 
-  // Start rendering with the project title
-  if (currentProject === allProjects.projectsArray[0])
-    toDosAreaDiv.innerHTML = `<h2>Notas</h2>`; // If default project
-  else toDosAreaDiv.innerHTML = `<h2>${project.name}</h2>`;
+  // Clear to dos div ----------------------------------------------------------
+  toDosAreaDiv.innerHTML = "";
 
-  // Render each todo item
+  // Render each todo item------------------------------------------------------
   for (let item of project.toDos) {
     toDosAreaDiv.insertAdjacentHTML(
       "beforeend",
@@ -155,7 +146,7 @@ function renderToDosArea(project) {
           <input type="checkbox" ${item.checked ? "checked" : ""} /> 
           <input type="text" value="${item.title}" class="title" 
           placeholder="Insira um título aqui"/>
-          <input type="date" value="${item.dueDate}" class="due-date">
+          <input type="date" value="${item.dueDate}" class="dueDate">
           <button type="button" class="priority">${item.priority}</button>
           <button type="button" class="remove-todo">X</button>
         </div>
@@ -166,12 +157,12 @@ function renderToDosArea(project) {
     );
   }
 
-  // Button for add to do item
+  // Button for add to do item--------------------------------------------------
   toDosAreaDiv.insertAdjacentHTML(
     "beforeend",
     `<button type="button" id="add-todo-item">+</button>`
   );
-  // Event for add button
+  // Function for the add button
   toDosAreaDiv.querySelector("#add-todo-item").addEventListener("click", () => {
     // Variables with current day for the backticks
     const y = new Date().getFullYear(),
@@ -189,7 +180,7 @@ function renderToDosArea(project) {
     renderToDosArea(currentProject);
   });
 
-  // Add event listener to the checkboxes
+  // Function for the checkboxes -----------------------------------------------
   toDosAreaDiv.querySelectorAll("[type='checkbox']").forEach((box) => {
     box.addEventListener("change", (e) => {
       // Read the div (parent parent element) index
@@ -202,7 +193,7 @@ function renderToDosArea(project) {
     });
   });
 
-  // Add event listener to the priority togglers
+  // Add event listener to the priority togglers--------------------------------
   toDosAreaDiv.querySelectorAll(".priority").forEach((button) => {
     button.addEventListener("click", (e) => {
       // Read the div (parent parent element) index
@@ -217,46 +208,35 @@ function renderToDosArea(project) {
     });
   });
 
-  // Add event listener on due date input
-  toDosAreaDiv.querySelectorAll(".due-date").forEach((input) => {
-    input.addEventListener("change", (e) => {
-      // Read the div (parent parent element) index
-      const index =
-        e.target.parentElement.parentElement.getAttribute("data-todo-index");
-      // Change priority from 1 to 3
-      currentProject.toDos[index].dueDate = e.target.value;
+  // Function for title, due date and description changes-----------------------
+  function applyToDoChanges(e) {
+    // Read the div's (parent parent element) index
+    const index =
+      e.target.parentElement.parentElement.getAttribute("data-todo-index");
 
-      renderToDosArea(currentProject);
-    });
+    // Read the input class
+    const input = e.target.classList[0];
+
+    currentProject.toDos[index][input] = e.target.value;
+    renderToDosArea(currentProject);
+  }
+
+  // Add event listener on due date input---------------------------------------
+  toDosAreaDiv.querySelectorAll(".dueDate").forEach((input) => {
+    input.addEventListener("change", applyToDoChanges);
   });
 
-  // Add event listener on title input
+  // Add event listener on title input------------------------------------------
   toDosAreaDiv.querySelectorAll(".title").forEach((input) => {
-    input.addEventListener("change", (e) => {
-      // Read the div (parent parent element) index
-      const index =
-        e.target.parentElement.parentElement.getAttribute("data-todo-index");
-
-      currentProject.toDos[index].title = e.target.value;
-
-      renderToDosArea(currentProject);
-    });
+    input.addEventListener("change", applyToDoChanges);
   });
 
-  // Add event listener on description textarea
+  // Add event listener on description textarea---------------------------------
   toDosAreaDiv.querySelectorAll(".description").forEach((textarea) => {
-    textarea.addEventListener("change", (e) => {
-      // Read the div (parent parent element) index
-      const index =
-        e.target.parentElement.parentElement.getAttribute("data-todo-index");
-
-      currentProject.toDos[index].description = e.target.value;
-
-      renderToDosArea(currentProject);
-    });
+    textarea.addEventListener("change", applyToDoChanges);
   });
 
-  // Add event listener on remove buttons (double click)
+  // Add event listener on remove buttons (double click)------------------------
   toDosAreaDiv.querySelectorAll(".remove-todo").forEach((btn) => {
     btn.addEventListener("dblclick", (e) => {
       // Read the div (parent parent element) index
@@ -269,27 +249,6 @@ function renderToDosArea(project) {
     });
   });
 }
-
-function updateLocalStorage() {
-  localStorage.clear();
-
-  // Load the name of every project to create the localStorage key
-  for (let project of allProjects.projectsArray) {
-    if (project.toDos.length === 0) {
-      // Save a empty value if there is no todo items
-      localStorage.setItem(project.name, "");
-    } else {
-      // Load every todo item and save as a key
-      for (let item of project.toDos) {
-        localStorage.setItem(project.name, JSON.stringify(item));
-      }
-    }
-  }
-}
-
-(function getLocalStorage() {
-  //console.log();
-})();
 
 // Initialize Menu
 renderMenu();
