@@ -31,7 +31,7 @@ const allProjects = {
 };
 
 function renderMenu() {
-  localStorage.setItem("allProj", JSON.stringify(allProjects.projectsArray));
+  updateLocalStorage();
 
   const menuDiv = document.querySelector("#menu");
 
@@ -115,6 +115,7 @@ function renderMenu() {
   addProjectBtn.id = "add-project";
   addProjectBtn.addEventListener("click", () => {
     allProjects.addProject();
+    renderMenu();
     // Render new project (last of the array)
     renderToDosArea(
       allProjects.projectsArray[allProjects.projectsArray.length - 1]
@@ -124,7 +125,7 @@ function renderMenu() {
 }
 
 function renderToDosArea(project) {
-  localStorage.setItem("allProj", JSON.stringify(allProjects.projectsArray));
+  updateLocalStorage();
   currentProject = project;
 
   const toDosAreaDiv = document.querySelector("#todos-area-div");
@@ -166,7 +167,6 @@ function renderToDosArea(project) {
       m = new Date().getMonth() + 1,
       d = new Date().getDate();
 
-    console.log(currentProject);
     currentProject.addToDoItem(
       "",
       "",
@@ -259,10 +259,26 @@ function renderToDosArea(project) {
   });
 }
 
-console.table(JSON.parse(localStorage.getItem("allProj")));
-// Add todo btn doesn't work
-//allProjects.projectsArray = JSON.parse(localStorage.getItem("allProj"));
-console.table(allProjects.projectsArray);
+function updateLocalStorage() {
+  localStorage.clear();
+
+  // Load the name of every project to create the localStorage key
+  for (let project of allProjects.projectsArray) {
+    if (project.toDos.length === 0) {
+      // Save a empty value if there is no todo items
+      localStorage.setItem(project.name, "");
+    } else {
+      // Load every todo item and save as a key
+      for (let item of project.toDos) {
+        localStorage.setItem(project.name, JSON.stringify(item));
+      }
+    }
+  }
+}
+
+(function getLocalStorage() {
+  //console.log();
+})();
 
 // Initialize Menu
 renderMenu();
