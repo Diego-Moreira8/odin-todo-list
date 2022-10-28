@@ -16,8 +16,8 @@ class Project {
 const allProjects = {
   projectsArray: [new Project("default")], // Array with default project
 
-  addProject() {
-    allProjects.projectsArray.push(new Project("Novo Projeto"));
+  addProject(name) {
+    allProjects.projectsArray.push(new Project(name));
     renderMenu();
   },
 
@@ -51,17 +51,31 @@ function renderMenu() {
   // Create ADD PROJECT button -------------------------------------------------
   menuDiv.insertAdjacentHTML(
     "beforeend",
-    `<button id="add-project">+</button>`
+    `<div><button id="add-project">+</button><div>`
   );
 
   // Function for add project---------------------------------------------------
-  menuDiv.querySelector("#add-project").addEventListener("click", () => {
-    allProjects.addProject();
-    renderMenu();
-    // Render new project (last of the array)
-    renderToDosArea(
-      allProjects.projectsArray[allProjects.projectsArray.length - 1]
-    );
+  menuDiv.querySelector("#add-project").addEventListener("click", (e) => {
+    // Take the div (parent element)
+    const parent = e.target.parentElement;
+    // Replace the buttons with a rename field
+    parent.innerHTML = `
+        <form>
+          <input type="text" placeholder="Nome do projeto" required />
+          <button type="submit">Criar</button>
+          <button type="button" class="cancel-rename">Cancelar</button>
+        <form>
+      `;
+
+    parent.querySelector("form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      allProjects.addProject(e.target[0].value);
+      renderMenu();
+      // Render new project (last of the array)
+      renderToDosArea(
+        allProjects.projectsArray[allProjects.projectsArray.length - 1]
+      );
+    });
   });
 
   // Function to the projects buttons ------------------------------------------
@@ -89,7 +103,7 @@ function renderMenu() {
     // Replace the buttons with a rename field
     parent.innerHTML = `
         <form>
-          <input type="text" />
+          <input type="text" required />
           <button type="submit">OK</button>
           <button type="button" class="cancel-rename">X</button>
         <form>
@@ -250,9 +264,11 @@ function renderToDosArea(project) {
   });
 }
 
-// Initialize Menu
-renderMenu();
-
-// Initialize on Default
 let currentProject = allProjects.projectsArray[0];
-renderToDosArea(currentProject);
+(function init() {
+  // Initialize Menu
+  renderMenu();
+
+  // Initialize on Default
+  renderToDosArea(currentProject);
+})();
