@@ -31,16 +31,16 @@ const allProjects = {
 };
 
 function renderMenu() {
-  updateLocalStorage();
+  //updateLocalStorage();
 
   const menuDiv = document.querySelector("#menu");
 
-  // Clear menu and add the default project button
+  // Clear menu and add the default project button------------------------------
   menuDiv.innerHTML = `<div data-project-index=0>
-    <button class="project">Notas</button>
+    <button class="project" id="default-project">Notas</button>
   </div>`;
 
-  // Create buttons with allProjects.projectsArray, except the default
+  // Create buttons with allProjects.projectsArray, except the default----------
   for (let i = 1; i < allProjects.projectsArray.length; i++) {
     menuDiv.insertAdjacentHTML(
       "beforeend",
@@ -54,20 +54,75 @@ function renderMenu() {
     );
   }
 
-  // Adding event listeners to the projects buttons
+  // Create ADD PROJECT button -------------------------------------------------
+  menuDiv.insertAdjacentHTML(
+    "beforeend",
+    `<button id="add-project">+</button>`
+  );
+
+  // Function for add project---------------------------------------------------
+  menuDiv.querySelector("#add-project").addEventListener("click", () => {
+    allProjects.addProject();
+    renderMenu();
+    // Render new project (last of the array)
+    renderToDosArea(
+      allProjects.projectsArray[allProjects.projectsArray.length - 1]
+    );
+  });
+
+  // Function to the projects buttons ------------------------------------------
+  // Render the todos of the project
   const projectButtons = menuDiv.querySelectorAll(".project");
   projectButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      // Read the div's attribute
+      // Read the div's index attribute to render it
       const index = e.target.parentElement.getAttribute("data-project-index");
       renderToDosArea(allProjects.projectsArray[index]);
     });
   });
 
-  // Adding event listeners to the remove project buttons
+  // Event listener to the rename project buttons-------------------------------
+  const renameProjectButtons = menuDiv.querySelectorAll(".rename-project");
+  renameProjectButtons.forEach((button) => {
+    button.addEventListener("click", renameProject);
+  });
+
+  // Function to the rename project buttons-------------------------------------
+  // Change the project div to a rename form
+  function renameProject(e) {
+    // Take the div (parent element)
+    const parent = e.target.parentElement;
+    // Replace the buttons with a rename field
+    parent.innerHTML = `
+        <form>
+          <input type="text" />
+          <button type="submit">OK</button>
+          <button type="button" class="cancel-rename">X</button>
+        <form>
+      `;
+    // Function for apply change on submit
+    parent.querySelector("form").addEventListener("submit", (e) => {
+      e.preventDefault();
+      // Read the div's attribute
+      const index = e.target.parentElement.getAttribute("data-project-index");
+      const selectedProject = allProjects.projectsArray[index];
+      // Rename the project with the input value and render again
+      selectedProject.name = e.target[0].value;
+      renderMenu();
+      // Render Todos if i'm on the renamed project, to load the new title
+      if (currentProject === selectedProject) renderToDosArea(selectedProject);
+    });
+    // Function to the cancel button
+    parent.querySelector(".cancel-rename").addEventListener("click", () => {
+      renderMenu(); // Just render again
+    });
+  }
+
+  // Function to the remove project buttons-------------------------------------
+  // Delete project and render again on double click
   const removeProjectButtons = menuDiv.querySelectorAll(".remove-project");
   removeProjectButtons.forEach((button) => {
-    button.addEventListener("click", (e) => {
+    button.addEventListener("dblclick", (e) => {
       // Read the div's attribute
       const index = e.target.parentElement.getAttribute("data-project-index");
       // Render default project if current project is removed
@@ -78,50 +133,6 @@ function renderMenu() {
       renderMenu();
     });
   });
-
-  // Adding event listeners to the rename project buttons
-  const renameProjectButtons = menuDiv.querySelectorAll(".rename-project");
-  renameProjectButtons.forEach((button) => {
-    button.addEventListener("click", (e) => {
-      // Take the div (parent element)
-      const parent = e.target.parentElement;
-      // Replace the buttons with a rename field
-      parent.innerHTML = `
-        <form>
-          <input type="text" />
-          <button type="submit">OK</button>
-          <button type="button" class="cancel-rename">X</button>
-        <form>
-      `;
-      // Add submit event listener
-      parent.querySelector("form").addEventListener("submit", (e) => {
-        e.preventDefault();
-        // Read the div's attribute
-        const index = e.target.parentElement.getAttribute("data-project-index");
-        // Rename the project with the input value
-        allProjects.projectsArray[index].name = e.target[0].value;
-        renderMenu();
-      });
-      // Add event listener to the cancel button
-      parent.querySelector(".cancel-rename").addEventListener("click", () => {
-        renderMenu(); // Just render again
-      });
-    });
-  });
-
-  // Create ADD PROJECT button
-  const addProjectBtn = document.createElement("button");
-  addProjectBtn.textContent = "+";
-  addProjectBtn.id = "add-project";
-  addProjectBtn.addEventListener("click", () => {
-    allProjects.addProject();
-    renderMenu();
-    // Render new project (last of the array)
-    renderToDosArea(
-      allProjects.projectsArray[allProjects.projectsArray.length - 1]
-    );
-  });
-  menuDiv.appendChild(addProjectBtn);
 }
 
 function renderToDosArea(project) {
