@@ -61,22 +61,38 @@ function renderMenu() {
     // Replace the button with a rename field
     parent.innerHTML = `
         <form>
-          <input type="text" placeholder="Nome do projeto" required />
+          <input type="text" placeholder="Nome do projeto" 
+          autofocus required />
           <button type="submit">Criar</button>
           <button type="button" class="cancel-add">Cancelar</button>
         <form>
       `;
 
+    // Function for add project on submit
     parent.querySelector("form").addEventListener("submit", (e) => {
       e.preventDefault();
-      allProjects.addProject(e.target[0].value);
-      renderMenu();
-      // Render new project (last of the array)
-      renderToDosArea(
-        allProjects.projectsArray[allProjects.projectsArray.length - 1]
-      );
+
+      // Verify if already exists a project with that name
+      let isUnique = true;
+      for (let project of allProjects.projectsArray) {
+        if (e.target[0].value === project.name) {
+          isUnique = false;
+        }
+      }
+
+      if (isUnique) {
+        allProjects.addProject(e.target[0].value);
+        renderMenu();
+        // Render new project (last of the array)
+        renderToDosArea(
+          allProjects.projectsArray[allProjects.projectsArray.length - 1]
+        );
+      } else {
+        alert("Já existe um projeto com este nome!");
+      }
     });
 
+    // Function for cancel add
     parent.querySelector(".cancel-add").addEventListener("click", () => {
       renderMenu(); // Just render again
     });
@@ -107,23 +123,39 @@ function renderMenu() {
     // Replace the buttons with a rename field
     parent.innerHTML = `
         <form>
-          <input type="text" required />
+          <input type="text" autofocus required />
           <button type="submit">OK</button>
           <button type="button" class="cancel-rename">X</button>
         <form>
       `;
+
     // Function for apply change on submit
     parent.querySelector("form").addEventListener("submit", (e) => {
       e.preventDefault();
-      // Read the div's attribute
-      const index = e.target.parentElement.getAttribute("data-project-index");
-      const selectedProject = allProjects.projectsArray[index];
-      // Rename the project with the input value and render again
-      selectedProject.name = e.target[0].value;
-      renderMenu();
-      // Render Todos if i'm on the renamed project, to load the new title
-      if (currentProject === selectedProject) renderToDosArea(selectedProject);
+
+      // Verify if already exists a project with that name
+      let isUnique = true;
+      for (let project of allProjects.projectsArray) {
+        if (e.target[0].value === project.name) {
+          isUnique = false;
+        }
+      }
+
+      if (isUnique) {
+        // Read the div's attribute
+        const index = e.target.parentElement.getAttribute("data-project-index");
+        const selectedProject = allProjects.projectsArray[index];
+        // Rename the project with the input value and render again
+        selectedProject.name = e.target[0].value;
+        renderMenu();
+        // Render Todos if i'm on the renamed project, to load the new title
+        if (currentProject === selectedProject)
+          renderToDosArea(selectedProject);
+      } else {
+        alert("Já existe um projeto com este nome!");
+      }
     });
+
     // Function to the cancel button
     parent.querySelector(".cancel-rename").addEventListener("click", () => {
       renderMenu(); // Just render again
