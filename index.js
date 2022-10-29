@@ -63,11 +63,13 @@ function renderMenu() {
     parent.innerHTML = `
         <form>
           <input type="text" placeholder="Nome do projeto" 
-          autofocus required />
+          required />
           <button type="submit">Criar</button>
           <button type="button" class="cancel-add">Cancelar</button>
         <form>
       `;
+
+    parent.querySelector("input").focus();
 
     // Function for add project on submit
     parent.querySelector("form").addEventListener("submit", (e) => {
@@ -121,14 +123,19 @@ function renderMenu() {
   function renameProject(e) {
     // Take the div (parent element)
     const parent = e.target.parentElement;
+    // Read the div's attribute
+    const index = e.target.parentElement.getAttribute("data-project-index");
     // Replace the buttons with a rename field
     parent.innerHTML = `
         <form>
-          <input type="text" autofocus required />
+          <input type="text" value="${allProjects.projectsArray[index].name}"
+          required />
           <button type="submit">OK</button>
           <button type="button" class="cancel-rename">X</button>
         <form>
       `;
+
+    parent.querySelector("input").focus();
 
     // Function for apply change on submit
     parent.querySelector("form").addEventListener("submit", (e) => {
@@ -143,8 +150,6 @@ function renderMenu() {
       }
 
       if (isUnique) {
-        // Read the div's attribute
-        const index = e.target.parentElement.getAttribute("data-project-index");
         const selectedProject = allProjects.projectsArray[index];
         // Rename the project with the input value and render again
         selectedProject.name = e.target[0].value;
