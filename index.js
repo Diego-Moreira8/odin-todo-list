@@ -18,7 +18,6 @@ const allProjects = {
 
   addProject(name) {
     allProjects.projectsArray.push(new Project(name));
-    renderMenu();
   },
 
   removeProject(index) {
@@ -27,6 +26,8 @@ const allProjects = {
 };
 
 function renderMenu() {
+  updateLocalStorage();
+
   const menuDiv = document.querySelector("#menu");
 
   // Clear menu and add the default project button------------------------------
@@ -180,6 +181,8 @@ function renderMenu() {
 }
 
 function renderToDosArea(project) {
+  updateLocalStorage();
+
   currentProject = project;
 
   const toDosAreaDiv = document.querySelector("#todos-area-div");
@@ -298,6 +301,20 @@ function renderToDosArea(project) {
       renderToDosArea(currentProject);
     });
   });
+}
+
+(function syncWithLocalStorage() {
+  console.log("---SYNC WITH LOCALSTORAGE---");
+})();
+
+function updateLocalStorage() {
+  console.log("---UPDATE LOCALSTORAGE---");
+
+  localStorage.clear();
+
+  for (let project of allProjects.projectsArray) {
+    localStorage.setItem(project.name, JSON.stringify(project.toDos));
+  }
 }
 
 let currentProject = allProjects.projectsArray[0];
