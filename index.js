@@ -309,14 +309,36 @@ function renderToDosArea(project) {
 }
 
 (function syncWithLocalStorage() {
-  console.log("---SYNC WITH LOCALSTORAGE---");
+  if (localStorage.length === 0) return "localStorage is empty";
+  // Create projects with the names from projectsNames key in localStorage -----
+  const projectsNames = JSON.parse(localStorage.getItem("projectsNames"));
+  for (let name of projectsNames) {
+    if (name === "default") continue; // Skip default
+    allProjects.addProject(name);
+  }
+
+  for (let i = 0; i < localStorage.length; i++) {
+    if (localStorage.key(i) === "projectsNames") continue;
+    for (let project of allProjects.projectsArray) {
+      if (localStorage.key(i) !== project.name) continue;
+      else {
+        project.toDos = JSON.parse(localStorage.getItem(localStorage.key(i)));
+      }
+    }
+  }
 })();
 
 function updateLocalStorage() {
-  console.log("---UPDATE LOCALSTORAGE---");
-
   localStorage.clear();
 
+  // Save only projects names in the right position ----------------------------
+  let projectsNames = [];
+  for (let project of allProjects.projectsArray) {
+    projectsNames.push(project.name);
+  }
+  localStorage.setItem("projectsNames", JSON.stringify(projectsNames));
+
+  // Save only projects to dos -------------------------------------------------
   for (let project of allProjects.projectsArray) {
     localStorage.setItem(project.name, JSON.stringify(project.toDos));
   }
