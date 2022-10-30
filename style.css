@@ -1,0 +1,21 @@
+:root {
+  font-family: sans-serif;
+}
+
+body {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 32px 64px 1fr;
+}
+
+header,
+body > div,
+footer {
+  border: 1px solid red;
+}
+
+#todos-area-div,
+#menu {
+  overflow: scroll;
+}
