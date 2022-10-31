@@ -47,51 +47,54 @@ function renderMenu() {
     );
   }
 
+  // Create/recreate add project button
+  document.querySelector("#add-project").innerHTML = "<button>+</button>";
+
   // Function for add project---------------------------------------------------
-  menuDiv.querySelector("#add-project").addEventListener("click", (e) => {
-    // Take the div (parent element)
-    const parent = e.target.parentElement;
-    // Replace the button with a rename field
-    parent.innerHTML = `
-        <form>
+  document
+    .querySelector("#add-project button")
+    .addEventListener("click", (e) => {
+      // Take the div (parent element)
+      const parent = e.target.parentElement;
+      // Replace the button with a rename field
+      parent.innerHTML = `<form>
           <input type="text" placeholder="Nome do projeto" 
           required />
           <button type="submit">Criar</button>
           <button type="button" class="cancel-add">Cancelar</button>
-        <form>
-      `;
+        <form>`;
 
-    parent.querySelector("input").focus();
+      parent.querySelector("input").focus();
 
-    // Function for add project on submit
-    parent.querySelector("form").addEventListener("submit", (e) => {
-      e.preventDefault();
+      // Function for add project on submit
+      parent.querySelector("form").addEventListener("submit", (e) => {
+        e.preventDefault();
 
-      // Verify if already exists a project with that name
-      let isUnique = true;
-      for (let project of allProjects.projectsArray) {
-        if (e.target[0].value === project.name) {
-          isUnique = false;
+        // Verify if already exists a project with that name
+        let isUnique = true;
+        for (let project of allProjects.projectsArray) {
+          if (e.target[0].value === project.name) {
+            isUnique = false;
+          }
         }
-      }
 
-      if (isUnique) {
-        allProjects.addProject(e.target[0].value);
-        renderMenu();
-        // Render new project (last of the array)
-        renderToDosArea(
-          allProjects.projectsArray[allProjects.projectsArray.length - 1]
-        );
-      } else {
-        alert("Já existe um projeto com este nome!");
-      }
-    });
+        if (isUnique) {
+          allProjects.addProject(e.target[0].value);
+          renderMenu();
+          // Render new project (last of the array)
+          renderToDosArea(
+            allProjects.projectsArray[allProjects.projectsArray.length - 1]
+          );
+        } else {
+          alert("Já existe um projeto com este nome!");
+        }
+      });
 
-    // Function for cancel add
-    parent.querySelector(".cancel-add").addEventListener("click", () => {
-      renderMenu(); // Just render again
+      // Function for cancel add
+      parent.querySelector(".cancel-add").addEventListener("click", () => {
+        renderMenu(); // Just render again
+      });
     });
-  });
 
   // Function to the projects buttons ------------------------------------------
   // Render the todos of the project
@@ -116,7 +119,7 @@ function renderMenu() {
     // Take the div (parent element)
     const parent = e.target.parentElement;
     // Read the div's attribute
-    const index = e.target.parentElement.getAttribute("data-project-index");
+    const index = parent.getAttribute("data-project-index");
     // Replace the buttons with a rename field
     parent.innerHTML = `
         <form>
