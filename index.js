@@ -98,7 +98,7 @@ function renderMenu() {
 
   // Function to the projects buttons ------------------------------------------
   // Render the todos of the project
-  const projectButtons = menuDiv.querySelectorAll(".project");
+  const projectButtons = document.querySelectorAll(".project");
   projectButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
       // Read the div's index attribute to render it
