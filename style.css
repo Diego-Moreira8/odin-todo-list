@@ -2,20 +2,47 @@
   font-family: sans-serif;
 }
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 32px 64px 1fr;
+  grid-template-rows: 32px calc(16px * 7) 1fr;
 }
 
-header,
+header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: rgb(237, 237, 237);
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* header,
 body > div,
 footer {
   border: 1px solid red;
-}
+} */
 
 #todos-area-div,
 #menu {
-  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+#menu {
+  display: flex;
+  flex-flow: column;
+  padding: 8px;
+}
+
+#user-projects > div {
+  display: grid;
+  grid-template-columns: 1fr 50px 50px;
 }

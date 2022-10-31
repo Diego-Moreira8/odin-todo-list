@@ -28,12 +28,10 @@ const allProjects = {
 function renderMenu() {
   updateLocalStorage();
 
-  const menuDiv = document.querySelector("#menu");
+  const menuDiv = document.querySelector("#user-projects");
 
   // Clear menu and add the default project button------------------------------
-  menuDiv.innerHTML = `<div data-project-index=0>
-    <button class="project" id="default-project">Notas</button>
-  </div>`;
+  menuDiv.innerHTML = "";
 
   // Create buttons with allProjects.projectsArray, except the default----------
   for (let i = 1; i < allProjects.projectsArray.length; i++) {
@@ -43,17 +41,11 @@ function renderMenu() {
         <button class="project">
           ${allProjects.projectsArray[i].name}
         </button>
-        <button class="rename-project">Rename</button>
+        <button class="rename-project">R</button>
         <button class="remove-project">X</button>
       </div>`
     );
   }
-
-  // Create ADD PROJECT button -------------------------------------------------
-  menuDiv.insertAdjacentHTML(
-    "beforeend",
-    `<div><button id="add-project">+</button><div>`
-  );
 
   // Function for add project---------------------------------------------------
   menuDiv.querySelector("#add-project").addEventListener("click", (e) => {
