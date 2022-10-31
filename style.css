@@ -17,18 +17,11 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
-
   background-color: rgb(237, 237, 237);
   text-align: center;
   font-size: 1.5rem;
   font-weight: bold;
 }
-
-/* header,
-body > div,
-footer {
-  border: 1px solid red;
-} */
 
 #todos-area-div,
 #menu {
@@ -42,7 +35,52 @@ footer {
   padding: 8px;
 }
 
-#user-projects > div {
+#menu button {
+  background-color: #fff;
+  height: 32px;
+  border: 1px solid #d0d0d0;
+}
+
+#default-project,
+#add-project button {
+  width: 100%;
+}
+
+#user-projects > div,
+#user-projects form {
   display: grid;
   grid-template-columns: 1fr 50px 50px;
+}
+
+.project {
+  text-align: left;
+}
+
+.rename-project,
+.remove-project {
+  text-align: center;
+}
+
+/* Rename project form ********************************************************/
+#user-projects .renaming {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+#user-projects input {
+  width: 100%;
+}
+
+/* Add project form ********************************************************/
+#add-project form {
+  display: grid;
+}
+
+#add-project input {
+  height: 32px;
+}
+
+.add-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
 }

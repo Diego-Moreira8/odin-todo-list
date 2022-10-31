@@ -60,8 +60,10 @@ function renderMenu() {
       parent.innerHTML = `<form>
           <input type="text" placeholder="Nome do projeto" 
           required />
+          <div class="add-options">
           <button type="submit">Criar</button>
           <button type="button" class="cancel-add">Cancelar</button>
+          </div>
         <form>`;
 
       parent.querySelector("input").focus();
@@ -124,6 +126,8 @@ function renderMenu() {
     const parent = e.target.parentElement;
     // Read the div's attribute
     const index = parent.getAttribute("data-project-index");
+    // For css
+    parent.classList.add("renaming");
     // Replace the buttons with a rename field
     parent.innerHTML = `
         <form>
