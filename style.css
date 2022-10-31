@@ -11,6 +11,7 @@ body {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: 32px calc(16px * 7) 1fr;
+  gap: 8px;
 }
 
 header {
@@ -71,7 +72,7 @@ header {
   width: 100%;
 }
 
-/* Add project form ********************************************************/
+/* Add project form ***********************************************************/
 #add-project form {
   display: grid;
 }
@@ -83,4 +84,39 @@ header {
 .add-options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+}
+
+/* Todo items *****************************************************************/
+#todo-items {
+  padding: 16px;
+  display: flex;
+  flex-flow: column;
+  gap: 24px;
+}
+
+#current-project {
+  font-size: 1.25rem;
+  font-weight: bold;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  padding: 8px;
+  background-color: rgb(209, 209, 209);
+  color: rgb(48, 48, 48);
+}
+
+.todo-item {
+  display: flex;
+  flex-flow: column;
+  gap: 4px;
+}
+
+.todo-item div:first-of-type {
+  display: grid;
+  grid-template-columns: 25px calc(100% - 175px - 16px) 100px 25px 25px;
+  gap: 4px;
+}
+.todo-item div:nth-of-type(2) {
+  display: grid;
+  grid-template-columns: 1fr;
 }

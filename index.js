@@ -193,7 +193,15 @@ function renderToDosArea(project) {
 
   currentProject = project;
 
-  const toDosAreaDiv = document.querySelector("#todos-area-div");
+  // Render title --------------------------------------------------------------
+  if (currentProject.name === "default")
+    document.querySelector("#current-project").innerHTML = "Notas";
+  else
+    document.querySelector(
+      "#current-project"
+    ).innerHTML = `<h2>${currentProject.name}</h2>`;
+
+  const toDosAreaDiv = document.querySelector("#todo-items");
 
   // Clear to dos div ----------------------------------------------------------
   toDosAreaDiv.innerHTML = "";
