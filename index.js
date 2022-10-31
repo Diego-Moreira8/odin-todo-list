@@ -101,9 +101,13 @@ function renderMenu() {
   const projectButtons = document.querySelectorAll(".project");
   projectButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
-      // Read the div's index attribute to render it
-      const index = e.target.parentElement.getAttribute("data-project-index");
-      renderToDosArea(allProjects.projectsArray[index]);
+      if (button.id === "default-project") {
+        renderToDosArea(allProjects.projectsArray[0]);
+      } else {
+        // Read the div's index attribute to render it
+        const index = e.target.parentElement.getAttribute("data-project-index");
+        renderToDosArea(allProjects.projectsArray[index]);
+      }
     });
   });
 
