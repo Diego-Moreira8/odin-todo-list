@@ -1,27 +1,34 @@
-:root {
-  font-family: sans-serif;
-}
-
+:root,
 * {
-  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  --dark-color: #333333;
+  --medium-color: #fbe013;
+  --light-color: #ffffff;
+  --button-color: #f6f6f6;
 }
 
 body {
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 32px calc(16px * 7) 1fr;
+  grid-template-rows: 48px calc(16px * 7) 1fr;
   gap: 8px;
+  background-color: var(--light-color);
 }
 
-header {
+header,
+#current-project {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgb(237, 237, 237);
-  text-align: center;
+  background-color: var(--medium-color);
+  color: var(--dark-color);
   font-size: 1.5rem;
-  font-weight: bold;
+  font-weight: 700;
+}
+
+header {
+  font-family: Pacifico;
 }
 
 #todos-area-div,
@@ -37,9 +44,8 @@ header {
 }
 
 #menu button {
-  background-color: #fff;
   height: 32px;
-  border: 1px solid #d0d0d0;
+  border: none;
 }
 
 #default-project,
@@ -51,6 +57,26 @@ header {
 #user-projects form {
   display: grid;
   grid-template-columns: 1fr 50px 50px;
+}
+
+#user-projects > div,
+#menu div:first-of-type,
+#menu div:last-of-type {
+  background-color: var(--button-color);
+  border-radius: 8px;
+  padding: 4px;
+  margin-bottom: 4px;
+}
+
+#add-project,
+#add-project button {
+  background-color: rgb(219, 235, 219) !important;
+  color: var(--dark-color);
+  font-weight: bold;
+}
+
+#menu button {
+  background-color: var(--button-color);
 }
 
 .project {
@@ -96,13 +122,9 @@ header {
 
 #current-project {
   font-size: 1.25rem;
-  font-weight: bold;
-  text-align: center;
   position: sticky;
   top: 0;
   padding: 8px;
-  background-color: rgb(209, 209, 209);
-  color: rgb(48, 48, 48);
 }
 
 .todo-item {

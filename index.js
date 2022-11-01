@@ -41,14 +41,23 @@ function renderMenu() {
         <button class="project">
           ${allProjects.projectsArray[i].name}
         </button>
-        <button class="rename-project">R</button>
-        <button class="remove-project">X</button>
+        <button class="rename-project">
+          <span class="material-symbols-outlined">
+            drive_file_rename_outline
+          </span>
+        </button>
+        <button class="remove-project">
+          <span class="material-symbols-outlined">
+            delete
+          </span>
+        </button>
       </div>`
     );
   }
 
   // Create/recreate add project button
-  document.querySelector("#add-project").innerHTML = "<button>+</button>";
+  document.querySelector("#add-project").innerHTML =
+    "<button>Novo projeto</button>";
 
   // Function for add project---------------------------------------------------
   document
