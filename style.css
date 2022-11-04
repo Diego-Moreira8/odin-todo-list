@@ -7,6 +7,10 @@
   --button-color: #f6f6f6;
 }
 
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 20;
+}
+
 body {
   height: 100vh;
   display: grid;
@@ -16,129 +20,7 @@ body {
   background-color: var(--light-color);
 }
 
-header,
-#current-project {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--medium-color);
-  color: var(--dark-color);
-  font-size: 1.5rem;
-  font-weight: 700;
-}
-
-header {
-  font-family: Pacifico;
-}
-
-#todos-area-div,
-#menu {
+#menu,
+#todos-area-div {
   overflow-y: scroll;
-  overflow-x: hidden;
-}
-
-#menu {
-  display: flex;
-  flex-flow: column;
-  padding: 8px;
-}
-
-#menu button {
-  height: 32px;
-  border: none;
-}
-
-#default-project,
-#add-project button {
-  width: 100%;
-}
-
-#user-projects > div,
-#user-projects form {
-  display: grid;
-  grid-template-columns: 1fr 50px 50px;
-}
-
-#user-projects > div,
-#menu div:first-of-type,
-#menu div:last-of-type {
-  background-color: var(--button-color);
-  border-radius: 8px;
-  padding: 4px;
-  margin-bottom: 4px;
-}
-
-#add-project,
-#add-project button {
-  background-color: rgb(219, 235, 219) !important;
-  color: var(--dark-color);
-  font-weight: bold;
-}
-
-#menu button {
-  background-color: var(--button-color);
-}
-
-.project {
-  text-align: left;
-}
-
-.rename-project,
-.remove-project {
-  text-align: center;
-}
-
-/* Rename project form ********************************************************/
-#user-projects .renaming {
-  display: grid;
-  grid-template-columns: 1fr;
-}
-
-#user-projects input {
-  width: 100%;
-}
-
-/* Add project form ***********************************************************/
-#add-project form {
-  display: grid;
-}
-
-#add-project input {
-  height: 32px;
-}
-
-.add-options {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-}
-
-/* Todo items *****************************************************************/
-#todo-items {
-  padding: 16px;
-  display: flex;
-  flex-flow: column;
-  gap: 24px;
-}
-
-#current-project {
-  font-size: 1.25rem;
-  position: sticky;
-  top: 0;
-  padding: 8px;
-}
-
-.todo-item {
-  display: flex;
-  flex-flow: column;
-  gap: 4px;
-}
-
-.todo-item div:first-of-type {
-  display: grid;
-  grid-template-columns: 25px calc(100% - 175px - 16px) 100px 25px 25px;
-  gap: 4px;
-}
-.todo-item div:nth-of-type(2) {
-  display: grid;
-  grid-template-columns: 1fr;
 }

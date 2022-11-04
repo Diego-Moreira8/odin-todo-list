@@ -28,84 +28,28 @@ const allProjects = {
 function renderMenu() {
   updateLocalStorage();
 
-  const menuDiv = document.querySelector("#user-projects");
+  const projectsDiv = document.querySelector("#user-projects");
 
-  // Clear menu and add the default project button------------------------------
-  menuDiv.innerHTML = "";
+  // Clear user projects -------------------------------------------------------
+  projectsDiv.innerHTML = "";
 
   // Create buttons with allProjects.projectsArray, except the default----------
   for (let i = 1; i < allProjects.projectsArray.length; i++) {
-    menuDiv.insertAdjacentHTML(
+    projectsDiv.insertAdjacentHTML(
       "beforeend",
-      `<div data-project-index=${i}>
-        <button class="project">
+      `<div class="project" data-project-index=${i}>
+        <button class="project-name">
           ${allProjects.projectsArray[i].name}
         </button>
-        <button class="rename-project">
-          <span class="material-symbols-outlined">
-            drive_file_rename_outline
-          </span>
+        <button class="rename-project material-symbols-outlined">
+          drive_file_rename_outline
         </button>
-        <button class="remove-project">
-          <span class="material-symbols-outlined">
-            delete
-          </span>
+        <button class="remove-project material-symbols-outlined">
+          delete
         </button>
       </div>`
     );
   }
-
-  // Create/recreate add project button
-  document.querySelector("#add-project").innerHTML =
-    "<button>Novo projeto</button>";
-
-  // Function for add project---------------------------------------------------
-  document
-    .querySelector("#add-project button")
-    .addEventListener("click", (e) => {
-      // Take the div (parent element)
-      const parent = e.target.parentElement;
-      // Replace the button with a rename field
-      parent.innerHTML = `<form>
-          <input type="text" placeholder="Nome do projeto" 
-          required />
-          <div class="add-options">
-          <button type="submit">Criar</button>
-          <button type="button" class="cancel-add">Cancelar</button>
-          </div>
-        <form>`;
-
-      parent.querySelector("input").focus();
-
-      // Function for add project on submit
-      parent.querySelector("form").addEventListener("submit", (e) => {
-        e.preventDefault();
-
-        // Verify if already exists a project with that name
-        let isUnique = true;
-        for (let project of allProjects.projectsArray) {
-          if (e.target[0].value === project.name) {
-            isUnique = false;
-          }
-        }
-
-        if (isUnique) {
-          allProjects.addProject(e.target[0].value);
-          renderMenu();
-          // Render new project (last of the array)
-          renderToDosArea(
-            allProjects.projectsArray[allProjects.projectsArray.length - 1]
-          );
-        } else {
-          alert("Já existe um projeto com este nome!");
-        }
-      });
-
-      // Function for cancel add
-      parent.querySelector(".cancel-add").addEventListener("click", () => {
-        renderMenu(); // Just render again
-      });
-    });
 
   // Function to the projects buttons ------------------------------------------
   // Render the todos of the project
@@ -123,7 +67,7 @@ function renderMenu() {
   });
 
   // Event listener to the rename project buttons-------------------------------
-  const renameProjectButtons = menuDiv.querySelectorAll(".rename-project");
+  const renameProjectButtons = projectsDiv.querySelectorAll(".rename-project");
   renameProjectButtons.forEach((button) => {
     button.addEventListener("click", renameProject);
   });
@@ -182,7 +126,7 @@ function renderMenu() {
 
   // Function to the remove project buttons-------------------------------------
   // Delete project and render again on double click
-  const removeProjectButtons = menuDiv.querySelectorAll(".remove-project");
+  const removeProjectButtons = projectsDiv.querySelectorAll(".remove-project");
   removeProjectButtons.forEach((button) => {
     button.addEventListener("dblclick", (e) => {
       // Read the div's attribute
@@ -369,6 +313,70 @@ let currentProject = allProjects.projectsArray[0];
   // Initialize Menu
   renderMenu();
 
+  // Add function for Default Project Button
+  document
+    .querySelector("#default-project button")
+    .addEventListener("click", () => {
+      renderToDosArea(allProjects.projectsArray[0]);
+    });
+
   // Initialize on Default
   renderToDosArea(currentProject);
+})();
+
+(function addProjectButton() {
+  // Create/recreate add project button
+  document.querySelector("#add-project").innerHTML =
+    "<button>Novo projeto</button>";
+
+  // Function for add project---------------------------------------------------
+  document
+    .querySelector("#add-project button")
+    .addEventListener("click", (e) => {
+      // Take the div (parent element)
+      const parent = e.target.parentElement;
+      // Replace the button with a rename field
+      parent.innerHTML = `<form>
+          <input type="text" placeholder="Nome do projeto" 
+          required />
+          <button type="submit" class="material-symbols-outlined">
+            done
+          </button>
+          <button type="button" class="cancel-add material-symbols-outlined">
+            close
+          </button>
+        <form>`;
+
+      parent.querySelector("input").focus();
+
+      // Function for add project on submit
+      parent.querySelector("form").addEventListener("submit", (e) => {
+        e.preventDefault();
+
+        // Verify if already exists a project with that name
+        let isUnique = true;
+        for (let project of allProjects.projectsArray) {
+          if (e.target[0].value === project.name) {
+            isUnique = false;
+          }
+        }
+
+        if (isUnique) {
+          allProjects.addProject(e.target[0].value);
+          renderMenu();
+          addProjectButton();
+          // Render new project (last of the array)
+          renderToDosArea(
+            allProjects.projectsArray[allProjects.projectsArray.length - 1]
+          );
+        } else {
+          alert("Já existe um projeto com este nome!");
+        }
+      });
+
+      // Function for cancel add
+      parent.querySelector(".cancel-add").addEventListener("click", () => {
+        addProjectButton();
+      });
+    });
 })();
