@@ -318,12 +318,14 @@ function addProjectButton() {
       const parent = e.target.parentElement;
       // Replace the button with a rename field
       parent.innerHTML = `<form>
-          <input type="text" placeholder="Nome do projeto" 
-          required />
-          <button type="submit" class="material-symbols-outlined">
+          <input id="new-project-name-input" type="text" 
+          placeholder="Nome do projeto" required />
+          <button id="new-project-submit" class="material-symbols-outlined" 
+          type="submit">
             done
           </button>
-          <button type="button" class="cancel-add material-symbols-outlined">
+          <button id="new-project-cancel" 
+          class="material-symbols-outlined" type="button">
             close
           </button>
         <form>`;
@@ -356,9 +358,11 @@ function addProjectButton() {
       });
 
       // Function for cancel add
-      parent.querySelector(".cancel-add").addEventListener("click", () => {
-        addProjectButton();
-      });
+      parent
+        .querySelector("#new-project-cancel")
+        .addEventListener("click", () => {
+          addProjectButton();
+        });
     });
 }
 

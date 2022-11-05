@@ -4,14 +4,14 @@
   --dark-color: #333333;
   --medium-color: #fbe013;
   --light-color: #ffffff;
-  --button-color: #f6f6f6;
+  --button-color: #e6e6e6;
 }
 
 body {
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 48px calc(16px * 9) 1fr;
+  grid-template-rows: 48px calc(16px * 10) 1fr;
   background-color: var(--light-color);
 }
 
@@ -31,7 +31,6 @@ header {
   font-family: Pacifico, sans-serif;
   font-weight: 400;
   font-size: 1.5rem;
-  box-shadow: 0px 0px 29px 0px rgba(0, 0, 0, 0.2);
 }
 
 /* MENU ********************************************************************* */
@@ -50,7 +49,7 @@ header {
 #default-project,
 .project,
 #add-project {
-  height: 32px;
+  height: 40px;
 }
 
 #default-project,
@@ -65,33 +64,56 @@ header {
 }
 
 .project,
-.rename-form {
+.rename-form,
+#add-project form {
   display: grid;
   grid-template-columns: 1fr repeat(2, 50px);
 }
 
 .project-name,
-.rename-input {
+.rename-input,
+#new-project-name-input {
   text-align: left;
   padding: 0 16px;
   border-radius: 8px 0 0 8px;
 }
 
 .rename-project,
-.rename-submit {
-  border-radius: 0;
+.rename-submit,
+#new-project-submit {
+  border-radius: 0 !important;
 }
 
 .remove-project,
-.rename-cancel {
-  border-radius: 0 8px 8px 0;
+.rename-cancel,
+#new-project-cancel {
+  border-radius: 0 8px 8px 0 !important;
 }
 
 #add-project button {
   border-radius: 8px;
   padding: 0 16px;
+  border: none;
+  background-color: var(--medium-color);
+  font-weight: bold;
 }
 
 #renaming {
   grid-template-columns: 1fr;
+}
+
+#default-project button,
+.project-name,
+.rename-input,
+.rename-project,
+.rename-submit,
+.remove-project,
+.rename-cancel {
+  border: none;
+  background-color: var(--button-color);
+}
+
+.rename-submit,
+.rename-cancel {
+  font-weight: bold;
 }
