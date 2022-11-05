@@ -161,7 +161,7 @@ function renderToDosArea(project) {
     toDosAreaDiv.insertAdjacentHTML(
       "beforeend",
       `<div class="todo-item" data-todo-index="${project.toDos.indexOf(item)}">
-        <div>
+        <div class="todo-details">
           <input type="checkbox" ${item.checked ? "checked" : ""} /> 
           <input type="text" value="${item.title}" class="title" 
           placeholder="Insira um título aqui"/>
@@ -169,7 +169,7 @@ function renderToDosArea(project) {
           <button type="button" class="priority">${item.priority}</button>
           <button type="button" class="remove-todo">X</button>
         </div>
-        <div>
+        <div class="todo-description">
           <textarea class="description">${item.description}</textarea>
         </div>
       </div>`
