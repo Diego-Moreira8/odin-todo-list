@@ -71,7 +71,7 @@ function renderMenu() {
   function renameProject(e) {
     // Take the div (parent element)
     const parent = e.target.parentElement;
-    parent.classList.add("renaming");
+    parent.id = "renaming";
     // Read the div's attribute
     const index = parent.getAttribute("data-project-index");
     // Replace the buttons with a rename field

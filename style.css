@@ -7,20 +7,91 @@
   --button-color: #f6f6f6;
 }
 
-.material-symbols-outlined {
-  font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 20;
-}
-
 body {
   height: 100vh;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 48px calc(16px * 7) 1fr;
-  gap: 8px;
+  grid-template-rows: 48px calc(16px * 9) 1fr;
   background-color: var(--light-color);
 }
 
 #menu,
 #todos-area-div {
   overflow-y: scroll;
+}
+
+/* HEADER ******************************************************************* */
+header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--medium-color);
+  color: var(--dark-color);
+  text-align: center;
+  font-family: Pacifico, sans-serif;
+  font-weight: 400;
+  font-size: 1.5rem;
+  box-shadow: 0px 0px 29px 0px rgba(0, 0, 0, 0.2);
+}
+
+/* MENU ********************************************************************* */
+
+#menu {
+  padding: 8px;
+}
+
+#menu,
+#user-projects {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+}
+
+#default-project,
+.project,
+#add-project {
+  height: 32px;
+}
+
+#default-project,
+#add-project {
+  display: grid;
+}
+
+#default-project button {
+  border-radius: 8px;
+  text-align: left;
+  padding: 0 16px;
+}
+
+.project,
+.rename-form {
+  display: grid;
+  grid-template-columns: 1fr repeat(2, 50px);
+}
+
+.project-name,
+.rename-input {
+  text-align: left;
+  padding: 0 16px;
+  border-radius: 8px 0 0 8px;
+}
+
+.rename-project,
+.rename-submit {
+  border-radius: 0;
+}
+
+.remove-project,
+.rename-cancel {
+  border-radius: 0 8px 8px 0;
+}
+
+#add-project button {
+  border-radius: 8px;
+  padding: 0 16px;
+}
+
+#renaming {
+  grid-template-columns: 1fr;
 }
