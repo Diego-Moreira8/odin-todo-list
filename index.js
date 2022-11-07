@@ -169,7 +169,7 @@ function renderToDosArea(project) {
           <input class="dueDate" type="date" value="${item.dueDate}">
           <button class="priority" type="button">${item.priority}</button>
           <button class="remove-todo material-symbols-outlined" type="button">
-          delete
+            delete
           </button>
         </div>
         <div class="todo-description">
@@ -182,7 +182,7 @@ function renderToDosArea(project) {
   // Button for add to do item--------------------------------------------------
   toDosAreaDiv.insertAdjacentHTML(
     "beforeend",
-    `<button type="button" id="add-todo-item">+</button>`
+    `<button type="button" id="add-todo-item">Nova nota</button>`
   );
   // Function for the add button
   toDosAreaDiv.querySelector("#add-todo-item").addEventListener("click", () => {

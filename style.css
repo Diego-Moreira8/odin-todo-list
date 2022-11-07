@@ -5,6 +5,7 @@
   --medium-color: #fbe013;
   --light-color: #ffffff;
   --button-color: #e6e6e6;
+  --green-color: #a5dfa5;
 }
 
 body {
@@ -94,7 +95,8 @@ header {
   border-radius: 8px;
   padding: 0 16px;
   border: none;
-  background-color: var(--medium-color);
+  background-color: var(--green-color);
+  color: var(--dark-color);
   font-weight: bold;
 }
 
@@ -199,4 +201,14 @@ header {
 
 .description {
   border-radius: 0 0 4px 4px;
+}
+
+#add-todo-item {
+  border-radius: 8px;
+  padding: 0 16px;
+  border: none;
+  background-color: var(--green-color);
+  color: var(--dark-color);
+  font-weight: bold;
+  height: 32px;
 }
