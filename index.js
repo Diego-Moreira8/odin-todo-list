@@ -162,12 +162,15 @@ function renderToDosArea(project) {
       "beforeend",
       `<div class="todo-item" data-todo-index="${project.toDos.indexOf(item)}">
         <div class="todo-details">
-          <input type="checkbox" ${item.checked ? "checked" : ""} /> 
-          <input type="text" value="${item.title}" class="title" 
+          <input class="item-checkbox" type="checkbox" 
+          ${item.checked ? "checked" : ""} /> 
+          <input class="title" type="text" value="${item.title}" 
           placeholder="Insira um título aqui"/>
-          <input type="date" value="${item.dueDate}" class="dueDate">
-          <button type="button" class="priority">${item.priority}</button>
-          <button type="button" class="remove-todo">X</button>
+          <input class="dueDate" type="date" value="${item.dueDate}">
+          <button class="priority" type="button">${item.priority}</button>
+          <button class="remove-todo material-symbols-outlined" type="button">
+          delete
+          </button>
         </div>
         <div class="todo-description">
           <textarea class="description">${item.description}</textarea>

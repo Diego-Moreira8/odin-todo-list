@@ -131,7 +131,6 @@ header {
 }
 
 #todo-items {
-  border: 1px solid black;
   display: flex;
   flex-flow: column;
   gap: 16px;
@@ -141,6 +140,10 @@ header {
 .todo-item {
   display: flex;
   flex-flow: column;
+  gap: 2px;
+  background-color: var(--button-color);
+  padding: 4px;
+  border-radius: 8px;
 }
 
 .todo-details {
@@ -164,5 +167,36 @@ header {
   height: 64px;
 }
 
-#add-todo-item {
+.todo-details .title {
+  font-weight: bold;
+  padding: 0 8px;
+  min-width: 0;
+}
+
+.todo-details button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  padding: 0 8px;
+  background-color: #ffffff;
+}
+
+.todo-details .title,
+.todo-details .dueDate,
+.description {
+  border: none;
+}
+
+.item-checkbox {
+  background-color: #fff;
+  border-radius: 4px 0 0 0;
+}
+
+.remove-todo {
+  border-radius: 0 4px 0 0;
+}
+
+.description {
+  border-radius: 0 0 4px 4px;
 }
