@@ -212,3 +212,29 @@ header {
   font-weight: bold;
   height: 32px;
 }
+
+@media (min-width: 700px) {
+  body {
+    grid-template-columns: 1fr 2fr;
+    grid-template-rows: 48px 1fr;
+  }
+
+  header {
+    grid-column: 1 / -1;
+    grid-row: 1 / 2;
+  }
+
+  #menu {
+    grid-column: 1 / 2;
+    grid-row: 2 / -1;
+  }
+
+  #todos-area-div {
+    grid-column: 2 / -1;
+    grid-row: 2 / -1;
+  }
+
+  #current-project {
+    background-color: var(--button-color);
+  }
+}
